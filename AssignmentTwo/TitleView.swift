@@ -9,14 +9,14 @@ import SwiftUI
 
 struct TitleView: View {
     var title: String
-    var icon: String
+    var icon: String?
     var body: some View {
         HStack{
             Text(title).font(.title)
                 .padding()
                 .foregroundColor(.white)
             Spacer()
-            Image(systemName: icon)
+            Image(systemName: icon ?? "")
                 .imageScale(.large)
                 .padding()
                 .foregroundColor(.white)
