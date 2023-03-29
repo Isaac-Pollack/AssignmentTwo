@@ -11,7 +11,7 @@ import SwiftUI
 struct AssignmentTwoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(title: "Master Checklist")
+            ContentView()
         }
     }
 }

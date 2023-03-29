@@ -7,37 +7,23 @@
 
 import SwiftUI
 
-let checklistContents = [
-["Ham"],
-["Cheese"],
-["Bread"],
-["Iphone"],
-["Watch"]
-]
-
 struct ContentView: View {
-    var title: String
-
+    @State var scientists = ["Isaac Newton", "Albert Einstein", "Archimedes"]
+    
     var body: some View {
-        //NavView: A container that adds stack-based nav with a title bar
         NavigationView {
-            Text(title).font(.title)
-                .foregroundColor(.white)
-                .padding()
-            List {
-                ForEach(checklistContents, id:\.self) {
-                    checklist in
-                    //NavigationLink(destination: DetailView(checklist: checklist)) {
-                        //ListView(checklist: checklist)
-                    }
-                }
-            }.listStyle(InsetListStyle())
+            VStack{
+                TitleView(title:"Great Scientists")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .padding()
+            }
         }
     }
-//}
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(title: "Master Checklist")
+        ContentView()
     }
 }

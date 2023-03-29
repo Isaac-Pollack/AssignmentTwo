@@ -15,7 +15,6 @@
 		31AAB04429CD804600B86A51 /* AssignmentTwoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AAB04329CD804600B86A51 /* AssignmentTwoUITests.swift */; };
 		31AAB04629CD804600B86A51 /* AssignmentTwoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AAB04529CD804600B86A51 /* AssignmentTwoUITestsLaunchTests.swift */; };
 		31AAB05329CD80E700B86A51 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AAB05229CD80E700B86A51 /* DetailView.swift */; };
-		31AAB05529CD813600B86A51 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AAB05429CD813600B86A51 /* ListView.swift */; };
 		31AAB05729CD848200B86A51 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AAB05629CD848200B86A51 /* TitleView.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,7 +47,6 @@
 		31AAB04329CD804600B86A51 /* AssignmentTwoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentTwoUITests.swift; sourceTree = "<group>"; };
 		31AAB04529CD804600B86A51 /* AssignmentTwoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentTwoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		31AAB05229CD80E700B86A51 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
-		31AAB05429CD813600B86A51 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		31AAB05629CD848200B86A51 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,7 +100,6 @@
 			children = (
 				31AAB02A29CD804300B86A51 /* ContentView.swift */,
 				31AAB05629CD848200B86A51 /* TitleView.swift */,
-				31AAB05429CD813600B86A51 /* ListView.swift */,
 				31AAB05229CD80E700B86A51 /* DetailView.swift */,
 				31AAB02C29CD804600B86A51 /* Assets.xcassets */,
 				31AAB02E29CD804600B86A51 /* Preview Content */,
@@ -266,7 +263,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31AAB05529CD813600B86A51 /* ListView.swift in Sources */,
 				31AAB02B29CD804300B86A51 /* ContentView.swift in Sources */,
 				31AAB05329CD80E700B86A51 /* DetailView.swift in Sources */,
 				31AAB02929CD804300B86A51 /* AssignmentTwoApp.swift in Sources */,

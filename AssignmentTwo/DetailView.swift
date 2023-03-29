@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct DetailView: View {
-    @State var name: String
+    @State var name:String
     @State var newName = ""
     @State var originName = ""
-
+    
     var body: some View {
-        
         VStack {
             TitleView(title: name)
             Text("You can enter a new name below:")
-            TextField("New Name", text: $newName)
-            Spacer()
+            TextField("<New Name>", text:$newName)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            
             HStack {
                 Button("Change") {
                     if (newName != "") {
@@ -28,16 +28,20 @@ struct DetailView: View {
                 Spacer()
                 Button("Cancel") {
                     name = originName
-                }.padding()
-                Spacer()
+                }
             }.padding()
-                .onAppear{name = originName}
+                Spacer()
+            }
+        
+            .padding()
+            .onAppear {
+                originName = name
+            }
         }
-    }
 }
 
-struct ListDetailView_Previews: PreviewProvider {
+struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailView(name: "Isaac")
+        DetailView(name:"Isaac Pollack")
     }
 }

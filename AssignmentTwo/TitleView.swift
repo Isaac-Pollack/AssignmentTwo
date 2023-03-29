@@ -25,6 +25,6 @@ struct TitleView: View {
 
 struct TitleView_Previews: PreviewProvider {
     static var previews: some View {
-        TitleView(title: "MOCK TITLE")
+        TitleView(title: "Title View")
     }
 }
