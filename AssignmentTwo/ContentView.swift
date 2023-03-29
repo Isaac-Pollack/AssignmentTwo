@@ -15,9 +15,9 @@ struct ContentView: View {
             VStack{
                 TitleView(title:"Great Scientists", icon: "person.3.fill")
                 List {
-                    ForEach(scientists, id:\.self) {
-                        person in
-                        NavigationLink(destination: DetailView(name: person)) {
+                    ForEach($scientists, id:\.self) {
+                        $person in
+                        NavigationLink(destination: DetailView(name: $person)) {
                             Text(person)
                         }
                     }
