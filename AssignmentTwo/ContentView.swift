@@ -7,24 +7,31 @@
 
 import SwiftUI
 
+struct Checklist: Hashable {
+    var name:String = "<unknown>"
+}
+
 struct ContentView: View {
-    @State var scientists = ["Isaac Newton", "Albert Einstein", "Archimedes"]
-    
+    @State var myChecklists = [
+        Checklist(name:"Groceries"),
+        Checklist(name:"Chores"),
+        Checklist(name:"Packing List")
+    ]
     var body: some View {
         NavigationView {
-            VStack{
-                TitleView(title:"Master Checklist", icon: "folder")
-                List {
-                    ForEach($scientists, id:\.self) {
-                        $person in
-                        NavigationLink(destination: DetailView(name: $person)) {
-                            Text(person)
-                        }
-                    }
+            List {
+                ForEach(myChecklists, id:\.self) {
+                    checklist in
+                    Text(checklist.name)
+                }.onDelete {
+                    indecs in
+                    myChecklists.remove(atOffsets: indecs)
                 }
-                Spacer()
-            }
-        }.padding()
+            }.navigationBarItems(leading: EditButton(), trailing: Button("+"){
+                let newChecklist = Checklist(name: "New Checklist\(myChecklists.count)")
+                myChecklists.append(newChecklist)
+            }).navigationTitle("My Checklists")
+        }
     }
 }
 
