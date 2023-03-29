@@ -31,20 +31,20 @@ struct DetailView: View {
                     displayName = originName
                 }
             }.padding()
-                Spacer()
-            }
-        
-            .padding()
-            .onAppear {
-                //Set initial value to below preview/binded 'name'
-                originName = name
-                displayName = name
-            }
-            .onDisappear {
-                //When we leave the view; set the name to the changed value
-                name = displayName
-            }
+            Spacer()
         }
+        
+        .padding()
+        .onAppear {
+            //Set initial value to below preview/binded 'name'
+            originName = name
+            displayName = name
+        }
+        .onDisappear {
+            //When we leave the view; set the name to the changed value
+            name = displayName
+        }
+    }
 }
 
 struct DetailView_Previews: PreviewProvider {
