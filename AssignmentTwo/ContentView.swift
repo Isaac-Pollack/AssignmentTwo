@@ -13,12 +13,18 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack{
-                TitleView(title:"Great Scientists")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding()
+                TitleView(title:"Great Scientists", icon: "person.3.fill")
+                List {
+                    ForEach(scientists, id:\.self) {
+                        person in
+                        NavigationLink(destination: DetailView(name: person)) {
+                            Text(person)
+                        }
+                    }
+                }
+                Spacer()
             }
-        }
+        }.padding()
     }
 }
 

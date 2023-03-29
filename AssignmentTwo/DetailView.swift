@@ -14,7 +14,7 @@ struct DetailView: View {
     
     var body: some View {
         VStack {
-            TitleView(title: name)
+            TitleView(title: name, icon: "person.circle")
             Text("You can enter a new name below:")
             TextField("<New Name>", text:$newName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())

@@ -9,13 +9,14 @@ import SwiftUI
 
 struct TitleView: View {
     var title: String
+    var icon: String
     var body: some View {
         HStack{
             Text(title).font(.title)
                 .padding()
                 .foregroundColor(.white)
             Spacer()
-            Image(systemName: "person.circle")
+            Image(systemName: icon)
                 .imageScale(.large)
                 .padding()
                 .foregroundColor(.white)
@@ -25,6 +26,6 @@ struct TitleView: View {
 
 struct TitleView_Previews: PreviewProvider {
     static var previews: some View {
-        TitleView(title: "Title View")
+        TitleView(title: "Title View", icon: "person.circle")
     }
 }
