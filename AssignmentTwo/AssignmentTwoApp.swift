@@ -2,16 +2,18 @@
 //  AssignmentTwoApp.swift
 //  AssignmentTwo
 //
-//  Created by Liliana Barnard on 24/3/2023.
+//  Created by Isaac Pollack on 24/3/2023.
 //
 
 import SwiftUI
-
 @main
+
 struct AssignmentTwoApp: App {
+    @State var model = ChecklistDataModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(model: $model)
         }
     }
 }

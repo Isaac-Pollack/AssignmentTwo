@@ -7,42 +7,31 @@
 
 import SwiftUI
 
-struct Checklist: Hashable {
-    //This will be used for JSON down the track
-    var name: String = "<unknown>"
-}
-
 struct ContentView: View {
-    //Default Checklists
-    @State var myChecklists = [
-        Checklist(name:"Groceries"),
-    ]
+    
+    @Binding var model:ChecklistDataModel
+    
     var body: some View {
         NavigationView {
             //Navlink to each checklist created
             List {
-                ForEach($myChecklists, id:\.self) {
-                    $checklist in
-                    NavigationLink(destination: DetailView(name: $checklist.name)) {
+                ForEach(model.checklists, id:\.self) { checklist in
+                    NavigationLink(destination: DetailView(name: .constant(checklist.name))) {
                         Text(checklist.name)
                     }
                 }.onDelete {
-                    //Remove the item tapped
+                    //Remove the item that the minus was tapped on
                     indecs in
-                    myChecklists.remove(atOffsets: indecs)
+                    model.checklists.remove(atOffsets: indecs)
+                    model.saveChecklist()
                 }
             }.navigationBarItems(leading: EditButton(), trailing: Button("+") {
                 //Append a new checklist item when clicked
-                let newChecklist = Checklist(name: "New Checklist\(myChecklists.count)")
-                myChecklists.append(newChecklist)
+                let newChecklist = Checklist(name: "New Checklist\(model.checklists.count)")
+                model.checklists.append(newChecklist)
+                model.saveChecklist()
             }).navigationTitle("My Checklists")
                 .navigationBarTitleDisplayMode(.automatic)
         }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }

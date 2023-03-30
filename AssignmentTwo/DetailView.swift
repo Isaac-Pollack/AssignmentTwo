@@ -18,8 +18,6 @@ struct DetailView: View {
     @State var displayName = ""
     @State var originName = ""
     
-    @State var isEditing = false
-    
     @State var ChecklistItem = [
         Item(name:"Apple")]
     
