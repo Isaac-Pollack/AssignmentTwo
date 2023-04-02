@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Item: Hashable {
-    //This will be used for JSON down the track
+    //This will be used for JSON down the track, for data persistance.
     var name: String = "<unknown>"
 }
 
@@ -19,35 +19,74 @@ struct DetailView: View {
     @State var originName = ""
     
     @State var ChecklistItem = [
-        Item(name:"Apple")]
+        Item(name:"Apple"),
+        Item(name:"Orange"),
+        Item(name:"Banana"),
+        Item(name:"Watermelon")
+    ]
+    
+    @State var mode: EditMode = .inactive
+    @State var itemBought = false
+    
+    //Custom tick box style for list items
+    struct TickBoxStyle: ToggleStyle {
+        //Extend on ToggleStyle : makeBody func
+        func makeBody(configuration: Configuration) -> some View {
+            return HStack {
+                configuration.label
+                Spacer()
+                Image(systemName: configuration.isOn ? "checkmark.square.fill" : "square")
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(configuration.isOn ? .green : .gray)
+                    .onTapGesture {
+                        configuration.isOn.toggle()
+                    }
+            }
+        }
+    }
     
     var body: some View {
         NavigationView {
                 VStack {
-                    Text(displayName).font(.largeTitle)
-                    
-                    //TextField("<New Name>", text:$newName)
+                    //Display this entire HStack if the edit mode is ON
+                    if(mode == .active) {
+                        HStack {
+                            Image(systemName: "square.and.pencil")
+                                .imageScale(.large)
+                            TextField("<New Checklist Name>", text:$newName)
+                            //Apply name change button
+                            Button("Apply") {
+                                if (newName != "") {
+                                    displayName = newName
+                                }
+                            }
+                            
+                            //Reset back to origin name
+                            Button("Reset") {
+                                displayName = originName
+                            }.foregroundColor(Color.red)
+                        }.padding()
+                    }
                     List {
                         ForEach($ChecklistItem, id:\.self) {
                             $Item in
-                            Text(Item.name)
-                        }.navigationBarItems(
-                            leading:
-                                HStack {
-                                    EditButton()
-                                },
-                            trailing:
-                                HStack {
-                                    Button("Apply") {
-                                        if (newName != "") {
-                                            displayName = newName
-                                        }
-                                    }
-                                    Button("Reset") {
-                                        displayName = originName
-                                    }.foregroundColor(Color.red)
-                                })
-                    }
+                            HStack {
+                                Text(Item.name)
+                                    .font(.title2)
+                                Toggle(isOn: $itemBought, label: {})
+                                    .toggleStyle(TickBoxStyle())
+                                Spacer()
+                            }
+                        }
+                        .onDelete { ChecklistItem.remove(atOffsets: $0) }
+                        .onMove { ChecklistItem.move(fromOffsets: $0, toOffset: $1) }
+                    }.navigationTitle(displayName)
+                        .navigationBarTitleDisplayMode(.automatic)
+                        .toolbar {
+                            //Default Edit/one Button
+                            EditButton()
+                        }.environment(\.editMode, $mode)
                 }
             }
             .onAppear {
