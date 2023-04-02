@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		311B55D329D53DE70079A6AB /* ChecklistDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311B55D229D53DE70079A6AB /* ChecklistDataModel.swift */; };
+		3185A58329D968720080AD4C /* A2-Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 3185A58229D968710080AD4C /* A2-Documentation.docc */; };
 		31AAB02929CD804300B86A51 /* AssignmentTwoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AAB02829CD804300B86A51 /* AssignmentTwoApp.swift */; };
 		31AAB02B29CD804300B86A51 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AAB02A29CD804300B86A51 /* ContentView.swift */; };
 		31AAB02D29CD804600B86A51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31AAB02C29CD804600B86A51 /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		311B55D229D53DE70079A6AB /* ChecklistDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistDataModel.swift; sourceTree = "<group>"; };
+		3185A58229D968710080AD4C /* A2-Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = "A2-Documentation.docc"; sourceTree = "<group>"; };
 		31AAB02529CD804300B86A51 /* AssignmentTwo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AssignmentTwo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31AAB02829CD804300B86A51 /* AssignmentTwoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentTwoApp.swift; sourceTree = "<group>"; };
 		31AAB02A29CD804300B86A51 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 		31AAB01C29CD804300B86A51 = {
 			isa = PBXGroup;
 			children = (
+				3185A58229D968710080AD4C /* A2-Documentation.docc */,
 				31AAB02729CD804300B86A51 /* AssignmentTwo */,
 				31AAB03829CD804600B86A51 /* AssignmentTwoTests */,
 				31AAB04229CD804600B86A51 /* AssignmentTwoUITests */,
@@ -266,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3185A58329D968720080AD4C /* A2-Documentation.docc in Sources */,
 				311B55D329D53DE70079A6AB /* ChecklistDataModel.swift in Sources */,
 				31AAB02B29CD804300B86A51 /* ContentView.swift in Sources */,
 				31AAB05329CD80E700B86A51 /* DetailView.swift in Sources */,

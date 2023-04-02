@@ -6,13 +6,16 @@
 //
 
 import Foundation
-
+///Checklist is built around JSON for data persistance purposes.
+/// -
+///It is both Hashable and Codable in nature.
 struct Checklist: Hashable, Codable {
-    //This will be used for JSON storage
+    ///Fully editable, reflecting in parent/sub menus in real-time.
     var name: String = "<unknown>"
 }
 
 var defaultChecklists = [
+    ///If the Checklist fails to retrieve the JSON data saved locally, this will populate it instead.
     Checklist(name: "Groceries"),
     Checklist(name: "Chores")
 ]
@@ -28,6 +31,7 @@ struct ChecklistDataModel: Codable {
     }
     
     static var fileurl: URL {
+        ///This is how we will store the data, in ``checklist.json``
         get throws {
             let fileName = "checklist.json"
             let fm = FileManager.default
