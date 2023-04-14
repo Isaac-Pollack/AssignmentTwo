@@ -10,27 +10,32 @@ import SwiftUI
 struct ContentView: View {
     @Binding var model:ChecklistDataModel
     @State var viewTitle: String = "Checklist App"
-    
+
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(model.checklists.enumerated().map{ $0 }, id:\.self) { (index, p) in
-                    NavigationLink(destination: DetailView(name: .constant(checklist.name))) {
-                        Text(checklist.name)
+        NavigationView() {
+            VStack {
+                EditView(item: $viewTitle)
+                List {
+                    ForEach(model.lists.enumerated().map { $0 }, id: \.element) { (index, x) in
+                        NavigationLink(destination: ListView(list: $model, count: index)) {
+                            Text(x.name)
+                        }
                     }
-                }.onDelete {
-                    //Remove the item that the minus was tapped on
-                    indecs in
-                    model.checklists.remove(atOffsets: indecs)
-                    model.saveChecklist()
-                }
-            }.navigationBarItems(leading: EditButton(), trailing: Button("+") {
-                //Append a new checklist item when clicked
-                let newChecklist = Checklist(name: "New Checklist\(model.checklists.count)")
-                model.checklists.append(newChecklist)
-                model.saveChecklist()
-            }).navigationTitle("My Checklists")
-                .navigationBarTitleDisplayMode(.automatic)
+                    .onDelete { indices in
+                        model.lists.remove(atOffsets: indices)
+                        model.save()
+                    }
+                    .onMove { indices, i in
+                        model.lists.move(fromOffsets: indices, toOffset: i)
+                        model.save()
+                    }
+                }.navigationTitle(viewTitle)
+                    .navigationBarItems(leading: EditButton(), trailing: Button("+") {
+                    model.lists.append(Checklist(name: "New List", tasks: [["New Task", "xmark"]]))
+                    model.save()
+                })
+            }
         }
+        .padding()
     }
 }
