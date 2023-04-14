@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     @Binding var model:ChecklistDataModel
+    @State var viewTitle: String = "Checklist App"
     
     var body: some View {
         NavigationView {
-            //Navlink to each checklist created
             List {
-                ForEach(model.checklists, id:\.self) { checklist in
+                ForEach(model.checklists.enumerated().map{ $0 }, id:\.self) { (index, p) in
                     NavigationLink(destination: DetailView(name: .constant(checklist.name))) {
                         Text(checklist.name)
                     }

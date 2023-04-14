@@ -11,14 +11,9 @@ import Foundation
 ///It is both Hashable and Codable in nature.
 struct Checklist: Hashable, Codable {
     ///Fully editable, reflecting in parent/sub menus in real-time.
-    var name: String = "<unknown>"
+    var name: String // Checklist Name
+    var items: [[String]] // Array of sub-items
 }
-
-var defaultChecklists = [
-    ///If the Checklist fails to retrieve the JSON data saved locally, this will populate it instead.
-    Checklist(name: "Groceries"),
-    Checklist(name: "Chores")
-]
 
 struct ChecklistDataModel: Codable {
     var checklists:[Checklist]
@@ -69,10 +64,15 @@ struct ChecklistDataModel: Codable {
         do {
             let data = try JSONEncoder().encode(self)
             let url = try ChecklistDataModel.fileurl
-            print("filepath:", url)
             try data.write(to: url, options: .atomic)
         } catch {
             print("I got an error: ", error)
         }
     }
 }
+
+var defaultChecklists: [Checklist] = [
+    ///If the Checklist fails to retrieve the JSON data saved locally, this will populate it instead.
+    Checklist(name: "Groceries", items: [["Bread", "Milk", "Apples", "Oranges"]]),
+    Checklist(name: "Chores", items: [["Clean Kitchen", "Take rubbish out", "Do homework"]])
+]

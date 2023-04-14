@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
+
 @main
 
 struct AssignmentTwoApp: App {
     @State var model = ChecklistDataModel()
-    
     var body: some Scene {
         WindowGroup {
             ContentView(model: $model)
