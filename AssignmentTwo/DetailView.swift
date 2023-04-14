@@ -8,51 +8,90 @@
 import SwiftUI
 
 struct DetailView: View {
-    //Checklists
+    //Parent Checklist
     @Binding var list: ChecklistDataModel
-    @State var mode: EditMode = .inactive
-    @State var newName = ""
+    @State var checklistName: String = ""
     @State var displayName = ""
-    @State var originName = ""
     
-    //Sub-Items
+    //Sub-Item/s
     var count: Int
     @State var itemMarked = false
     @State var newItem = ""
-    @State var listItems: [[String]] = []
+    @State var checklistItems: [[String]] = []
+    @State var tempList: [[String]] = []
     
     var body: some View {
         VStack {
-            List
+            EditView(item: $checklistName)
+            HStack {
+                TextField("Add Item:", text: $newItem)
+                Button(action: {
+                    tempList.append([newItem])
+                    newItem = ""
+                }) {
+                    Text("+")
+                }
+            }
             
             List {
-                ForEach($ChecklistItem, id:\.self) {
-                    $Item in
+                ForEach($tempList, id:\.self) { $item in
                     HStack {
-                        Text(Item.name)
-                            .font(.title2)
-                        Toggle(isOn: $itemBought, label: {})
-                            .toggleStyle(TickBoxStyle())
+                        Text(item[0])
                         Spacer()
+                        Image(systemName: "\(item[1])")
+                    }
+                    .onTapGesture {
+                        if(item[1] == "checkmark") {
+                            item[1] = "xmark"
+                        } else {
+                            item[1] = ""
+                        }
                     }
                 }
-                .onDelete { ChecklistItem.remove(atOffsets: $0) }
-                .onMove { ChecklistItem.move(fromOffsets: $0, toOffset: $1) }
-            }.navigationTitle(displayName)
-                .navigationBarTitleDisplayMode(.automatic)
-                .toolbar {
-                    //Default Edit/one Button
-                    EditButton()
-                }.environment(\.editMode, $mode)
+                .onDelete { indices in
+                    tempList.remove(atOffsets: indices)
+                }
+                .onMove { indices, i in
+                    tempList.move(fromOffsets: indices, toOffset: i)
+                }
+            }
         }
-    }
+        .navigationTitle("\(checklistName)")
+        .navigationBarItems(
+            leading:
+                Button(action: {
+                    if itemMarked {
+                        tempList = checklistItems
+                        itemMarked.toggle()
+                    } else {
+                        checklistItems = tempList
+                        tempList = tempList.map{ [$0[0], "xmark"] }
+                        itemMarked.toggle()
+                    }
+                }) {
+                    Text(itemMarked ? "Reset" : "Undo")
+                },
+            trailing:
+                HStack {
+                    Button(action: {
+                        list.checklists[count].items = tempList
+                        checklistItems = tempList
+                        list.save
+                    }) {
+                        Text("Save")
+                    }
+                    EditButton()
+                }
+        )
         .onAppear {
-            //Set initial value to below preview/binded 'name'
-            originName = name
-            displayName = name
+            checklistName = list.checklists[count].name
+            checklistItems = list.checklists[count].items
+            tempList = list.checklists[count].items
         }
         .onDisappear {
-            //When we leave the view; set the name to the changed value
-            name = displayName
+            list.checklists[count].name = checklistName
+            list.checklists[count].items = checklistItems
         }
+        .padding()
+    }
 }
