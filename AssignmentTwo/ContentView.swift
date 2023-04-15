@@ -8,29 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Binding var model:ChecklistDataModel
-    @State var viewTitle: String = "Checklist App"
+    @Binding var model: DataModel
+    @State var checklistTitle = "My Checklists"
 
     var body: some View {
         NavigationView() {
             VStack {
-                EditView(item: $viewTitle)
+                EditView(item: $checklistTitle)
                 List {
                     ForEach(model.lists.enumerated().map { $0 }, id: \.element) { (index, x) in
-                        NavigationLink(destination: ListView(list: $model, count: index)) {
+                        NavigationLink(destination: ListView(clist: $model, count: index)) {
                             Text(x.name)
                         }
                     }
-                    .onDelete { indices in
-                        model.lists.remove(atOffsets: indices)
+                    .onDelete { idx in
+                        model.lists.remove(atOffsets: idx)
                         model.save()
                     }
-                    .onMove { indices, i in
-                        model.lists.move(fromOffsets: indices, toOffset: i)
-                        model.save()
+                    .onMove { idx, i in
+                        model.lists.move(fromOffsets: idx, toOffset: i)
+                        model.saveChecklist()
                     }
-                }.navigationTitle(viewTitle)
-                    .navigationBarItems(leading: EditButton(), trailing: Button("+") {
+                }.navigationTitle(checklistTitle)
+                    .navigationBarItems(leading: EditButton(), trailing: Button("+"){
                     model.lists.append(Checklist(name: "New List", tasks: [["New Task", "xmark"]]))
                     model.save()
                 })

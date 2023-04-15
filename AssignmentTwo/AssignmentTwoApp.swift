@@ -10,7 +10,7 @@ import SwiftUI
 @main
 
 struct AssignmentTwoApp: App {
-    @State var model = ChecklistDataModel()
+    @State var model:DataModel = ChecklistDataModel()
     var body: some Scene {
         WindowGroup {
             ContentView(model: $model)
