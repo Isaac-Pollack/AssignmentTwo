@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Binding var model: DataModel
+    @Binding var model: ChecklistDataModel
     @State var checklistTitle = "My Checklists"
 
     var body: some View {
