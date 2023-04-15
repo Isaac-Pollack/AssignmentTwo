@@ -17,7 +17,7 @@ struct ContentView: View {
                 EditView(item: $checklistTitle)
                 List {
                     ForEach(model.lists.enumerated().map { $0 }, id: \.element) { (index, x) in
-                        NavigationLink(destination: ListView(clist: $model, count: index)) {
+                        NavigationLink(destination: ListView(list: $model, count: index)) {
                             Text(x.name)
                         }
                     }

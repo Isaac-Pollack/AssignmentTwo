@@ -93,7 +93,7 @@ struct ListView: View {
                     Button(action: {
                         list.checklists[count].items = tempList
                         checklistItems = tempList
-                        list.save
+                        list.saveChecklist()
                     }) {
                         Text("Save")
                     }
