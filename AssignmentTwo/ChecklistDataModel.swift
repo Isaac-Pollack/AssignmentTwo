@@ -18,30 +18,9 @@ struct Checklist: Hashable, Codable {
 struct ChecklistDataModel: Codable {
     var checklists:[Checklist]
 
-    enum CodingKeys : CodingKey {
-        case checklists
-    }
-    enum FileError: Error {
-        case dirNotFound
-    }
-
-    static var fileurl: URL {
-        ///This is how we will store the data, in ``checklist.json``
-        get throws {
-            let fileName = "checklist.json"
-            let fm = FileManager.default
-            guard let path = fm.urls(for: .documentDirectory, in:
-                                        FileManager.SearchPathDomainMask.userDomainMask).first
-            else {
-                throw FileError.dirNotFound
-            }
-            return path.appendingPathComponent(fileName)
-        }
-    }
-
     init() {
         checklists = []
-        loadChecklist()
+        loadChecklists()
     }
 
     func encode(to encoder: Encoder) throws {
@@ -49,9 +28,9 @@ struct ChecklistDataModel: Codable {
         try container.encode(checklists, forKey: .checklists)
     }
 
-    mutating func loadChecklist() {
-        guard let fileurl = try? ChecklistDataModel.fileurl,
-            let data = try? Data(contentsOf: fileurl),
+    mutating func loadChecklists() {
+        guard let path = getFile(),
+            let data = try? Data(contentsOf: path),
             let datamodel = try? JSONDecoder().decode(ChecklistDataModel.self, from: data)
         else {
             self.checklists = defaultChecklists
@@ -60,19 +39,31 @@ struct ChecklistDataModel: Codable {
         checklists = datamodel.checklists
     }
 
-    func saveChecklist() {
-        do {
-            let data = try JSONEncoder().encode(self)
-            let url = try ChecklistDataModel.fileurl
-            try data.write(to: url, options: .atomic)
-        } catch {
-            print("I got an error: ", error)
+    func saveChecklists() {
+        ///This is how we will store the data, in ``checklist.json``
+        guard let path = getFile(),
+              let data = try? JSONEncoder().encode(self)
+        else {
+            return
         }
+        try? data.write(to: path)
     }
+}
+
+func getFile() -> URL? {
+    ///This is how we will retrieve the data store, found  in ``func saveChecklist()``
+    let fileName = "checklist.json"
+    let fm = FileManager.default
+    guard let path = fm.urls(for: .documentDirectory, in:
+                                FileManager.SearchPathDomainMask.userDomainMask).first
+    else {
+        return nil
+    }
+    return path.appendingPathComponent(fileName)
 }
 
 var defaultChecklists: [Checklist] = [
     ///If the Checklist fails to retrieve the JSON data saved locally, this will populate it instead.
-    Checklist(name: "Groceries", items: [["Bread", "Milk", "Apples", "Oranges"]]),
-    Checklist(name: "Chores", items: [["Clean Kitchen", "Take rubbish out", "Do homework"]])
+    Checklist(name: "Groceries", items: [["Bread", "square"], ["Milk", "square"], ["Apples", "square"], ["Oranges", "square"]]),
+    Checklist(name: "Chores", items: [["Clean Kitchen", "square"], ["Take rubbish out", "square"], ["Do homework", "square"]])
 ]

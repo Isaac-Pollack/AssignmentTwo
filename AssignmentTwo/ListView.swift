@@ -38,7 +38,6 @@ struct ListView: View {
     @State var tempList: [[String]] = []
 
     var body: some View {
-        VStack {
             EditView(item: $checklistName)
             HStack {
                 TextField("Add Item:", text: $newItem)
@@ -54,14 +53,16 @@ struct ListView: View {
                 ForEach($tempList, id:\.self) { $item in
                     HStack {
                         Text(item[0])
+                        Toggle(isOn: $itemMarked, label: {})
+                            .toggleStyle(TickBoxStyle())
                         Spacer()
-                        Image(systemName: "\(item[1])")
                     }
                     .onTapGesture {
-                        if(item[1] == "checkmark") {
-                            item[1] = "xmark"
-                        } else {
-                            item[1] = ""
+                        if(item[1] == "checkmark.square.fill") {
+                            item[1] = "square"
+                        }
+                        else {
+                            item[1] = "checkmark.square.fill"
                         }
                     }
                 }
@@ -72,7 +73,6 @@ struct ListView: View {
                     tempList.move(fromOffsets: indices, toOffset: i)
                 }
             }
-        }
         .navigationTitle("\(checklistName)")
         .navigationBarItems(
             leading:
@@ -82,7 +82,7 @@ struct ListView: View {
                         itemMarked.toggle()
                     } else {
                         checklistItems = tempList
-                        tempList = tempList.map{ [$0[0], "xmark"] }
+                        tempList = tempList.map{ [$0[0], "square"] }
                         itemMarked.toggle()
                     }
                 }) {
@@ -93,7 +93,7 @@ struct ListView: View {
                     Button(action: {
                         list.checklists[count].items = tempList
                         checklistItems = tempList
-                        list.saveChecklist()
+                        list.saveChecklists()
                     }) {
                         Text("Save")
                     }
