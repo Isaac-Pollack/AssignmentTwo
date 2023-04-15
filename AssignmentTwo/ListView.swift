@@ -7,23 +7,6 @@
 
 import SwiftUI
 
-struct TickBoxStyle: ToggleStyle {
-    //Extend on ToggleStyle : makeBody for styling
-    func makeBody(configuration: Configuration) -> some View {
-        return HStack {
-            configuration.label
-            Spacer()
-            Image(systemName: configuration.isOn ? "checkmark.square.fill" : "square")
-                .resizable()
-                .frame(width: 24, height: 24)
-                .foregroundColor(configuration.isOn ? .green : .gray)
-                .onTapGesture {
-                    configuration.isOn.toggle()
-                }
-        }
-    }
-}
-
 struct ListView: View {
     //Parent Checklist
     @Binding var list: ChecklistDataModel
@@ -31,6 +14,7 @@ struct ListView: View {
     @State var displayName = ""
 
     //Sub-Item/s
+    @Environment(\.editMode) var editMode
     var count: Int
     @State var itemMarked = false
     @State var newItem = ""
@@ -38,24 +22,25 @@ struct ListView: View {
     @State var tempList: [[String]] = []
 
     var body: some View {
+        if(editMode?.wrappedValue == .inactive) {
             EditView(item: $checklistName)
             HStack {
                 TextField("Add Item:", text: $newItem)
                 Button(action: {
-                    tempList.append([newItem])
+                    tempList.append([newItem, "square"])
                     newItem = ""
                 }) {
                     Text("+")
                 }
             }
+        }
 
             List {
                 ForEach($tempList, id:\.self) { $item in
                     HStack {
                         Text(item[0])
-                        Toggle(isOn: $itemMarked, label: {})
-                            .toggleStyle(TickBoxStyle())
                         Spacer()
+                        Image(systemName: "\(item[1])")
                     }
                     .onTapGesture {
                         if(item[1] == "checkmark.square.fill") {
@@ -86,7 +71,9 @@ struct ListView: View {
                         itemMarked.toggle()
                     }
                 }) {
-                    Text(itemMarked ? "Reset" : "Undo")
+                    if(editMode?.wrappedValue == .active) {
+                        Text(itemMarked ? "Reset" : "Undo")
+                    }
                 },
             trailing:
                 HStack {
@@ -95,7 +82,9 @@ struct ListView: View {
                         checklistItems = tempList
                         list.saveChecklists()
                     }) {
-                        Text("Save")
+                        if(editMode?.wrappedValue == .active) {
+                            Text("Save")
+                        }
                     }
                     EditButton()
                 }

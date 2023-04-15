@@ -23,11 +23,6 @@ struct ChecklistDataModel: Codable {
         loadChecklists()
     }
 
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(checklists, forKey: .checklists)
-    }
-
     mutating func loadChecklists() {
         guard let path = getFile(),
             let data = try? Data(contentsOf: path),
@@ -42,7 +37,7 @@ struct ChecklistDataModel: Codable {
     func saveChecklists() {
         ///This is how we will store the data, in ``checklist.json``
         guard let path = getFile(),
-              let data = try? JSONEncoder().encode(self)
+            let data = try? JSONEncoder().encode(self)
         else {
             return
         }
