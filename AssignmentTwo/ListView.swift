@@ -14,9 +14,9 @@ struct ListView: View {
     @State var displayName = ""
 
     //Sub-Item/s
-    @Environment(\.editMode) var editMode
+    @Environment(\.editMode) var editMode // Another edit mode tracker, is it active?
     var count: Int
-    @State var itemMarked = false
+    @State var itemMarked = false // Is the item ticked?
     @State var newItem = ""
     @State var checklistItems: [[String]] = []
     @State var tempList: [[String]] = []
@@ -43,10 +43,12 @@ struct ListView: View {
                         Image(systemName: "\(item[1])")
                     }
                     .onTapGesture {
+                        /// If the second value in the checklist items array is ticked, and we click it, then it gets changed to unticked.
                         if(item[1] == "checkmark.square.fill") {
                             item[1] = "square"
                         }
                         else {
+                            /// Reverse of the above
                             item[1] = "checkmark.square.fill"
                         }
                     }
@@ -63,9 +65,11 @@ struct ListView: View {
             leading:
                 Button(action: {
                     if itemMarked {
+                        //Reset button
                         tempList = checklistItems
                         itemMarked.toggle()
                     } else {
+                        //Undo Button
                         checklistItems = tempList
                         tempList = tempList.map{ [$0[0], "square"] }
                         itemMarked.toggle()
@@ -78,6 +82,7 @@ struct ListView: View {
             trailing:
                 HStack {
                     Button(action: {
+                        //Save button
                         list.checklists[count].items = tempList
                         checklistItems = tempList
                         list.saveChecklists()

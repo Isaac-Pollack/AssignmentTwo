@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct EditView: View {
+    ///Extracted view to remove bloat from ContentView. Contains functionality for editing/resetting/undoing name changes.
     @Binding var item: String
     @State var displayItem: String = ""
-    @Environment(\.editMode) var editMode
+    @Environment(\.editMode) var editMode //Track whether we are editing or not
 
     var body: some View {
         VStack {
-            if(editMode?.wrappedValue == .active) {
+            if(editMode?.wrappedValue == .active) { // If edit mode is ACTIVE
                 HStack {
                     Image(systemName: "square.and.pencil")
                     TextField("Input:", text: $displayItem)
